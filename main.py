@@ -32,19 +32,23 @@ def PaddleOCR(content, lang="ch") -> str:
         r = ocr.ocr(content)
 
         for data_lines in r:
-            x = 0
+            cur_height = 0
             cur_data = []
 
             for data in data_lines:
-                cur_x = data[0][0][0]
+                height_up = min([x[1] for x in data[0]])
+                height_down = max([x[1] for x in data[0]])
 
-                if cur_x < x:
+                if height_up > cur_height:
                     if cur_data:
                         lines.append(" ".join(cur_data))
                         cur_data = []
 
-                cur_data.append(data[1][0])
-                x = cur_x
+                cur_data.append(data[1][0].strip())
+                cur_height = height_down
+
+            if cur_data:
+                lines.append(" ".join(cur_data))
     except Exception:
         pass
 
