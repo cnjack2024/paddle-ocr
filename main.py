@@ -12,6 +12,15 @@ from starlette.status import *
 
 
 def PaddleOCR(content, lang="ch") -> str:
+    def update_ch_model():
+        paddleocr.paddleocr.MODEL_URLS["OCR"]["PP-OCRv4"]["det"]["ch"][
+            "url"
+        ] = "https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_det_server_infer.tar"
+
+        paddleocr.paddleocr.MODEL_URLS["OCR"]["PP-OCRv4"]["rec"]["ch"][
+            "url"
+        ] = "https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_rec_server_infer.tar"
+
     try:
         image = Image.open(BytesIO(content))
     except Exception:
