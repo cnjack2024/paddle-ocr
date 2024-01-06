@@ -29,7 +29,7 @@ def PaddleOCR(content, lang="ch") -> str:
             status_code=HTTP_400_BAD_REQUEST,
         )
 
-    ocr = paddleocr.PaddleOCR(
+    ocr_object = paddleocr.PaddleOCR(
         lang=lang,
         show_log=False,
         use_angle_cls=True,
@@ -38,7 +38,7 @@ def PaddleOCR(content, lang="ch") -> str:
     lines = []
 
     try:
-        r = ocr.ocr(content)
+        r = ocr_object.ocr(content)
 
         for data_lines in r:
             cur_height = 0
